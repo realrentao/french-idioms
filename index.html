@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法语习语 | 涛子办事处</title>
+<style>
+
+/* === Italian Idioms - Global Styles === */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+:root {
+    --ita-green: #0055A4;
+    --ita-white: #F5F5F0;
+    --ita-red: #EF4135;
+    --gold: #C4A35A;
+    --gold-light: #F0E6C8;
+    --gold-dark: #A0813A;
+    --cream: #FDF8F0;
+    --warm-bg: #FAF6EE;
+    --card-bg: #FFFFFF;
+    --text-dark: #2C2416;
+    --text-mid: #6B5D4A;
+    --text-light: #9A8B75;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
+    --radius: 16px;
+    --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--warm-bg);
+    color: var(--text-dark);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+/* Tricolor Header */
+.tricolor-bar {
+    height: 4px;
+    background: linear-gradient(90deg, var(--ita-green) 0%, var(--ita-green) 33.33%, var(--ita-white) 33.33%, var(--ita-white) 66.66%, var(--ita-red) 66.66%, var(--ita-red) 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.main-header {
+    background: linear-gradient(135deg, #2C2416 0%, #4A3828 100%);
+    padding: 60px 20px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(196,163,90,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(206,43,55,0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.main-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.main-header .subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    opacity: 0.8;
+    position: relative;
+}
+
+.main-header .subtitle-cn {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-top: 6px;
+    position: relative;
+}
+
+/* Footer */
+.page-footer {
+    background: linear-gradient(135deg, #2C2416 0%, #4A3828 100%);
+    color: var(--text-light);
+    text-align: center;
+    padding: 24px 20px;
+    font-size: 0.85rem;
+}
+
+/* Back to Top */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    background: var(--gold-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Inline Play Button */
+.inline-play-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-light);
+    background: white;
+    color: var(--gold-dark);
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 4px;
+    padding: 0;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+/* Translation Toggle Button */
+.trans-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid var(--ita-green);
+    background: white;
+    color: var(--ita-green);
+    font-size: 0.65rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 4px;
+    padding: 0;
+    line-height: 1;
+}
+
+.trans-btn:hover {
+    background: var(--ita-green);
+    color: white;
+}
+
+.trans-btn.active {
+    background: var(--ita-green);
+    color: white;
+}
+
+/* Translation Text (hidden by default) */
+.trans-text {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--ita-green);
+    font-weight: 500;
+    padding: 6px 12px;
+    margin: 6px 0 2px 0;
+    background: rgba(0,146,70,0.05);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--ita-green);
+    line-height: 1.5;
+    width: 100%;
+    font-family: 'Noto Serif SC', serif;
+}
+
+.trans-text.visible {
+    display: block;
+}
+
+.inline-play-btn:hover {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+    transform: scale(1.1);
+}
+
+.inline-play-btn.playing {
+    background: var(--ita-red);
+    color: white;
+    border-color: var(--ita-red);
+    animation: inlinePulse 0.8s infinite;
+}
+
+@keyframes inlinePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(206,43,55,0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(206,43,55,0); }
+}
+
+/* Speed Labels */
+.speed-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Responsive */
+/* ============ CSS Flags (emoji-free) ============ */
+.flag-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    vertical-align: middle;
+}
+
+.flag-icon svg {
+    width: 22px;
+    height: 16px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+}
+
+.flag-it svg { width: 22px; height: 16px; }
+.flag-cn svg { width: 22px; height: 16px; }
+.flag-en svg { width: 22px; height: 16px; }
+
+.flag-it .label,
+.flag-cn .label,
+.flag-en .label {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .main-header h1 { font-size: 2rem; }
+    .main-header .subtitle { font-size: 1rem; }
+    .main-header { padding: 50px 16px 30px; }
+}
+
+@media (max-width: 480px) {
+    .main-header h1 { font-size: 1.6rem; }
+}
+
+
+/* === Index Page Specific Styles === */
+.search-bar {
+    max-width: 500px;
+    margin: -24px auto 40px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 14px 20px 14px 48px;
+    border: 2px solid var(--gold-light);
+    border-radius: 50px;
+    font-size: 1rem;
+    background: var(--card-bg);
+    color: var(--text-dark);
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.search-bar input:focus {
+    border-color: var(--gold);
+    box-shadow: var(--shadow-hover);
+}
+
+.search-bar .search-icon {
+    position: absolute;
+    left: 36px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.idiom-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.idiom-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+}
+
+.idiom-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ita-green), var(--gold), var(--ita-red));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.idiom-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--gold-light);
+}
+
+.idiom-card:hover::before {
+    opacity: 1;
+}
+
+.idiom-card .card-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+.idiom-card .card-idiom {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.idiom-card .card-category {
+    font-size: 0.75rem;
+    color: var(--ita-red);
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.idiom-card .card-meaning {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    line-height: 1.5;
+}
+
+.idiom-card .card-hint {
+    font-size: 0.8rem;
+    color: var(--gold-dark);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* No results */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    display: none;
+}
+
+/* Stats bar */
+.stats-bar {
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.stats-bar .count {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+}
+
+.stats-bar .count strong {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.category-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.category-tag {
+    padding: 4px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--card-bg);
+    border: 1px solid var(--gold-light);
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-tag:hover,
+.category-tag.active {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+}
+
+@media (max-width: 768px) {
+    .idiom-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 14px;
+        padding: 0 14px 40px;
+    }
+    .stats-bar { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+    .idiom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="tricolor-bar"></div>
+
+<header class="main-header">
+    <h1><span class="flag-icon flag-it"><svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="2" fill="#0055A4"/><rect x="1" width="1" height="2" fill="#FFFFFF"/><rect x="2" width="1" height="2" fill="#EF4135"/></svg></span> 法语习语</h1>
+    <div class="subtitle">Expressions et Idiomes Français</div>
+    <div class="subtitle-cn">常用法语习语，轻松掌握地道表达</div>
+</header>
+
+<div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="搜索习语 / Cherchez une expression..." oninput="filterIdioms()">
+</div>
+
+<div class="stats-bar">
+    <div class="count">共 <strong>100</strong> 个习语</div>
+    <div class="category-filters">
+        <span class="category-tag active" data-cat="all" onclick="filterByCategory('all', this)">全部</span>
+        <span class="category-tag" data-cat="action" onclick="filterByCategory('action', this)">Action 行动</span>
+                <span class="category-tag" data-cat="amitié" onclick="filterByCategory('amitié', this)">Amitié 友谊</span>
+                <span class="category-tag" data-cat="amour" onclick="filterByCategory('amour', this)">Amour 爱情</span>
+                <span class="category-tag" data-cat="apparence" onclick="filterByCategory('apparence', this)">Apparence 外表</span>
+                <span class="category-tag" data-cat="argent" onclick="filterByCategory('argent', this)">Argent 金钱</span>
+                <span class="category-tag" data-cat="chance" onclick="filterByCategory('chance', this)">Chance 运气</span>
+                <span class="category-tag" data-cat="critique" onclick="filterByCategory('critique', this)">Critique 批评</span>
+                <span class="category-tag" data-cat="encouragement" onclick="filterByCategory('encouragement', this)">Encouragement 鼓励</span>
+                <span class="category-tag" data-cat="famille" onclick="filterByCategory('famille', this)">Famille 家庭</span>
+                <span class="category-tag" data-cat="humour" onclick="filterByCategory('humour', this)">Humour 幽默</span>
+                <span class="category-tag" data-cat="patience" onclick="filterByCategory('patience', this)">Patience 耐心</span>
+                <span class="category-tag" data-cat="prudence" onclick="filterByCategory('prudence', this)">Prudence 谨慎</span>
+                <span class="category-tag" data-cat="réalité" onclick="filterByCategory('réalité', this)">Réalité 现实</span>
+                <span class="category-tag" data-cat="sagesse" onclick="filterByCategory('sagesse', this)">Sagesse 智慧</span>
+                <span class="category-tag" data-cat="santé" onclick="filterByCategory('santé', this)">Santé 健康</span>
+                <span class="category-tag" data-cat="travail" onclick="filterByCategory('travail', this)">Travail 工作</span>
+                
+    </div>
+</div>
+
+<div class="idiom-grid" id="idiomGrid">
+    
+        <a href="idiom-01.html" class="idiom-card" data-category="réalité" data-search="c'est la fin des haricots 全完了；没戏了">
+            <div class="card-number">#01</div>
+            <div class="card-idiom">C'est la fin des haricots</div>
+            <div class="card-category">Réalité</div>
+            <div class="card-meaning">全完了；没戏了</div>
+            <div class="card-hint">It's all over / the game is up.</div>
+        </a>
+        
+        <a href="idiom-02.html" class="idiom-card" data-category="santé" data-search="avoir le cafard 心情低落；有点抑郁">
+            <div class="card-number">#02</div>
+            <div class="card-idiom">Avoir le cafard</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">心情低落；有点抑郁</div>
+            <div class="card-hint">To have the blues / to feel down.</div>
+        </a>
+        
+        <a href="idiom-03.html" class="idiom-card" data-category="argent" data-search="coûter les yeux de la tête 贵得离谱；花了一大笔钱">
+            <div class="card-number">#03</div>
+            <div class="card-idiom">Coûter les yeux de la tête</div>
+            <div class="card-category">Argent</div>
+            <div class="card-meaning">贵得离谱；花了一大笔钱</div>
+            <div class="card-hint">To cost an arm and a leg.</div>
+        </a>
+        
+        <a href="idiom-04.html" class="idiom-card" data-category="réalité" data-search="être dans le pétrin 惹上麻烦；陷入困境">
+            <div class="card-number">#04</div>
+            <div class="card-idiom">Être dans le pétrin</div>
+            <div class="card-category">Réalité</div>
+            <div class="card-meaning">惹上麻烦；陷入困境</div>
+            <div class="card-hint">To be in a pickle / in hot water.</div>
+        </a>
+        
+        <a href="idiom-05.html" class="idiom-card" data-category="santé" data-search="avoir un chat dans la gorge 嗓子哑；喉咙有异物感">
+            <div class="card-number">#05</div>
+            <div class="card-idiom">Avoir un chat dans la gorge</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">嗓子哑；喉咙有异物感</div>
+            <div class="card-hint">To have a frog in one's throat.</div>
+        </a>
+        
+        <a href="idiom-06.html" class="idiom-card" data-category="critique" data-search="mettre son grain de sel 多嘴；插一脚发表意见">
+            <div class="card-number">#06</div>
+            <div class="card-idiom">Mettre son grain de sel</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">多嘴；插一脚发表意见</div>
+            <div class="card-hint">To put one's two cents in.</div>
+        </a>
+        
+        <a href="idiom-07.html" class="idiom-card" data-category="humour" data-search="pleuvoir des cordes 倾盆大雨">
+            <div class="card-number">#07</div>
+            <div class="card-idiom">Pleuvoir des cordes</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">倾盆大雨</div>
+            <div class="card-hint">To rain cats and dogs.</div>
+        </a>
+        
+        <a href="idiom-08.html" class="idiom-card" data-category="encouragement" data-search="avoir la pêche 精神饱满；状态超好">
+            <div class="card-number">#08</div>
+            <div class="card-idiom">Avoir la pêche</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">精神饱满；状态超好</div>
+            <div class="card-hint">To be on top of the world / full of beans.</div>
+        </a>
+        
+        <a href="idiom-09.html" class="idiom-card" data-category="santé" data-search="être au bout du rouleau 筋疲力尽；撑到极限了">
+            <div class="card-number">#09</div>
+            <div class="card-idiom">Être au bout du rouleau</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">筋疲力尽；撑到极限了</div>
+            <div class="card-hint">To be at the end of one's rope / tether.</div>
+        </a>
+        
+        <a href="idiom-10.html" class="idiom-card" data-category="prudence" data-search="faire la pluie et le beau temps 一手遮天；说一不二">
+            <div class="card-number">#10</div>
+            <div class="card-idiom">Faire la pluie et le beau temps</div>
+            <div class="card-category">Prudence</div>
+            <div class="card-meaning">一手遮天；说一不二</div>
+            <div class="card-hint">To call the shots / be the boss.</div>
+        </a>
+        
+        <a href="idiom-11.html" class="idiom-card" data-category="prudence" data-search="avoir le bras long 有门路；有影响力">
+            <div class="card-number">#11</div>
+            <div class="card-idiom">Avoir le bras long</div>
+            <div class="card-category">Prudence</div>
+            <div class="card-meaning">有门路；有影响力</div>
+            <div class="card-hint">To have pull / connections.</div>
+        </a>
+        
+        <a href="idiom-12.html" class="idiom-card" data-category="santé" data-search="tomber dans les pommes 晕倒；昏过去">
+            <div class="card-number">#12</div>
+            <div class="card-idiom">Tomber dans les pommes</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">晕倒；昏过去</div>
+            <div class="card-hint">To faint / pass out.</div>
+        </a>
+        
+        <a href="idiom-13.html" class="idiom-card" data-category="réalité" data-search="avoir la tête dans les nuages 心不在焉；爱做白日梦">
+            <div class="card-number">#13</div>
+            <div class="card-idiom">Avoir la tête dans les nuages</div>
+            <div class="card-category">Réalité</div>
+            <div class="card-meaning">心不在焉；爱做白日梦</div>
+            <div class="card-hint">To have one's head in the clouds.</div>
+        </a>
+        
+        <a href="idiom-14.html" class="idiom-card" data-category="critique" data-search="avoir un poil dans la main 懒得出奇；怕动手">
+            <div class="card-number">#14</div>
+            <div class="card-idiom">Avoir un poil dans la main</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">懒得出奇；怕动手</div>
+            <div class="card-hint">To be bone idle / lazy.</div>
+        </a>
+        
+        <a href="idiom-15.html" class="idiom-card" data-category="réalité" data-search="la goutte d'eau qui fait déborder le vase 压垮骆驼的最后一根稻草">
+            <div class="card-number">#15</div>
+            <div class="card-idiom">La goutte d'eau qui fait déborder le vase</div>
+            <div class="card-category">Réalité</div>
+            <div class="card-meaning">压垮骆驼的最后一根稻草</div>
+            <div class="card-hint">The straw that breaks the camel's back.</div>
+        </a>
+        
+        <a href="idiom-16.html" class="idiom-card" data-category="critique" data-search="être soupe au lait 一点就着；脾气暴躁">
+            <div class="card-number">#16</div>
+            <div class="card-idiom">Être soupe au lait</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">一点就着；脾气暴躁</div>
+            <div class="card-hint">To have a short fuse / hot temper.</div>
+        </a>
+        
+        <a href="idiom-17.html" class="idiom-card" data-category="sagesse" data-search="appeler un chat un chat 直言不讳；实话实说">
+            <div class="card-number">#17</div>
+            <div class="card-idiom">Appeler un chat un chat</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">直言不讳；实话实说</div>
+            <div class="card-hint">To call a spade a spade.</div>
+        </a>
+        
+        <a href="idiom-18.html" class="idiom-card" data-category="humour" data-search="raconter des salades 胡说八道；编造故事">
+            <div class="card-number">#18</div>
+            <div class="card-idiom">Raconter des salades</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">胡说八道；编造故事</div>
+            <div class="card-hint">To tell tall stories / fibs.</div>
+        </a>
+        
+        <a href="idiom-19.html" class="idiom-card" data-category="apparence" data-search="avoir la main verte 擅长养花；绿手指">
+            <div class="card-number">#19</div>
+            <div class="card-idiom">Avoir la main verte</div>
+            <div class="card-category">Apparence</div>
+            <div class="card-meaning">擅长养花；绿手指</div>
+            <div class="card-hint">To have a green thumb.</div>
+        </a>
+        
+        <a href="idiom-20.html" class="idiom-card" data-category="sagesse" data-search="couper les cheveux en quatre 钻牛角尖；过度细分">
+            <div class="card-number">#20</div>
+            <div class="card-idiom">Couper les cheveux en quatre</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">钻牛角尖；过度细分</div>
+            <div class="card-hint">To split hairs.</div>
+        </a>
+        
+        <a href="idiom-21.html" class="idiom-card" data-category="sagesse" data-search="mettre la charrue avant les bœufs 本末倒置；操之过急">
+            <div class="card-number">#21</div>
+            <div class="card-idiom">Mettre la charrue avant les bœufs</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">本末倒置；操之过急</div>
+            <div class="card-hint">To put the cart before the horse.</div>
+        </a>
+        
+        <a href="idiom-22.html" class="idiom-card" data-category="action" data-search="avoir d'autres chats à fouetter 有更要紧的事；另有要务">
+            <div class="card-number">#22</div>
+            <div class="card-idiom">Avoir d'autres chats à fouetter</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">有更要紧的事；另有要务</div>
+            <div class="card-hint">To have other fish to fry.</div>
+        </a>
+        
+        <a href="idiom-23.html" class="idiom-card" data-category="famille" data-search="être comme un coq en pâte 养尊处优；被伺候得舒舒服服">
+            <div class="card-number">#23</div>
+            <div class="card-idiom">Être comme un coq en pâte</div>
+            <div class="card-category">Famille</div>
+            <div class="card-meaning">养尊处优；被伺候得舒舒服服</div>
+            <div class="card-hint">To be like a pig in clover.</div>
+        </a>
+        
+        <a href="idiom-24.html" class="idiom-card" data-category="action" data-search="revenons à nos moutons 言归正传；回到正题">
+            <div class="card-number">#24</div>
+            <div class="card-idiom">Revenons à nos moutons</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">言归正传；回到正题</div>
+            <div class="card-hint">Let's get back to the point.</div>
+        </a>
+        
+        <a href="idiom-25.html" class="idiom-card" data-category="santé" data-search="avoir la gueule de bois 宿醉；酒后头疼">
+            <div class="card-number">#25</div>
+            <div class="card-idiom">Avoir la gueule de bois</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">宿醉；酒后头疼</div>
+            <div class="card-hint">To have a hangover.</div>
+        </a>
+        
+        <a href="idiom-26.html" class="idiom-card" data-category="encouragement" data-search="faire un tabac 大受欢迎；大获成功">
+            <div class="card-number">#26</div>
+            <div class="card-idiom">Faire un tabac</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">大受欢迎；大获成功</div>
+            <div class="card-hint">To be a big hit / smash.</div>
+        </a>
+        
+        <a href="idiom-27.html" class="idiom-card" data-category="encouragement" data-search="être au septième ciel 欣喜若狂；在七重天上">
+            <div class="card-number">#27</div>
+            <div class="card-idiom">Être au septième ciel</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">欣喜若狂；在七重天上</div>
+            <div class="card-hint">To be in seventh heaven.</div>
+        </a>
+        
+        <a href="idiom-28.html" class="idiom-card" data-category="prudence" data-search="mettre de l'eau dans son vin 放低姿态；收敛锋芒">
+            <div class="card-number">#28</div>
+            <div class="card-idiom">Mettre de l'eau dans son vin</div>
+            <div class="card-category">Prudence</div>
+            <div class="card-meaning">放低姿态；收敛锋芒</div>
+            <div class="card-hint">To soften one's stance.</div>
+        </a>
+        
+        <a href="idiom-29.html" class="idiom-card" data-category="action" data-search="prendre le taureau par les cornes 迎难而上；果断处理">
+            <div class="card-number">#29</div>
+            <div class="card-idiom">Prendre le taureau par les cornes</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">迎难而上；果断处理</div>
+            <div class="card-hint">To take the bull by the horns.</div>
+        </a>
+        
+        <a href="idiom-30.html" class="idiom-card" data-category="action" data-search="battre le fer tant qu'il est chaud 趁热打铁">
+            <div class="card-number">#30</div>
+            <div class="card-idiom">Battre le fer tant qu'il est chaud</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">趁热打铁</div>
+            <div class="card-hint">To strike while the iron is hot.</div>
+        </a>
+        
+        <a href="idiom-31.html" class="idiom-card" data-category="sagesse" data-search="l'habit ne fait pas le moine 人不可貌相；衣冠不等于人品">
+            <div class="card-number">#31</div>
+            <div class="card-idiom">L'habit ne fait pas le moine</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">人不可貌相；衣冠不等于人品</div>
+            <div class="card-hint">Clothes don't make the man.</div>
+        </a>
+        
+        <a href="idiom-32.html" class="idiom-card" data-category="sagesse" data-search="qui vole un œuf vole un bœuf 小时偷针，大时偷金">
+            <div class="card-number">#32</div>
+            <div class="card-idiom">Qui vole un œuf vole un bœuf</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">小时偷针，大时偷金</div>
+            <div class="card-hint">Give an inch and they'll take a mile.</div>
+        </a>
+        
+        <a href="idiom-33.html" class="idiom-card" data-category="patience" data-search="mieux vaut tard que jamais 迟做总比不做好">
+            <div class="card-number">#33</div>
+            <div class="card-idiom">Mieux vaut tard que jamais</div>
+            <div class="card-category">Patience</div>
+            <div class="card-meaning">迟做总比不做好</div>
+            <div class="card-hint">Better late than never.</div>
+        </a>
+        
+        <a href="idiom-34.html" class="idiom-card" data-category="patience" data-search="tout vient à point à qui sait attendre 功夫不负有心人；耐心终有回报">
+            <div class="card-number">#34</div>
+            <div class="card-idiom">Tout vient à point à qui sait attendre</div>
+            <div class="card-category">Patience</div>
+            <div class="card-meaning">功夫不负有心人；耐心终有回报</div>
+            <div class="card-hint">Everything comes to him who waits.</div>
+        </a>
+        
+        <a href="idiom-35.html" class="idiom-card" data-category="sagesse" data-search="les petits ruisseaux font les grandes rivières 积少成多；涓流汇成江河">
+            <div class="card-number">#35</div>
+            <div class="card-idiom">Les petits ruisseaux font les grandes rivières</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">积少成多；涓流汇成江河</div>
+            <div class="card-hint">Little drops make the mighty ocean.</div>
+        </a>
+        
+        <a href="idiom-36.html" class="idiom-card" data-category="humour" data-search="quand les poules auront des dents 除非太阳从西边出来；绝不可能">
+            <div class="card-number">#36</div>
+            <div class="card-idiom">Quand les poules auront des dents</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">除非太阳从西边出来；绝不可能</div>
+            <div class="card-hint">When pigs fly.</div>
+        </a>
+        
+        <a href="idiom-37.html" class="idiom-card" data-category="prudence" data-search="vendre la peau de l'ours avant de l'avoir tué 过早乐观；未得先算">
+            <div class="card-number">#37</div>
+            <div class="card-idiom">Vendre la peau de l'ours avant de l'avoir tué</div>
+            <div class="card-category">Prudence</div>
+            <div class="card-meaning">过早乐观；未得先算</div>
+            <div class="card-hint">To count one's chickens before they hatch.</div>
+        </a>
+        
+        <a href="idiom-38.html" class="idiom-card" data-category="amour" data-search="avoir un cœur d'artichaut 多情易动心；一点就爱">
+            <div class="card-number">#38</div>
+            <div class="card-idiom">Avoir un cœur d'artichaut</div>
+            <div class="card-category">Amour</div>
+            <div class="card-meaning">多情易动心；一点就爱</div>
+            <div class="card-hint">To fall in love easily.</div>
+        </a>
+        
+        <a href="idiom-39.html" class="idiom-card" data-category="amour" data-search="être fait l'un pour l'autre 天生一对；很般配">
+            <div class="card-number">#39</div>
+            <div class="card-idiom">Être fait l'un pour l'autre</div>
+            <div class="card-category">Amour</div>
+            <div class="card-meaning">天生一对；很般配</div>
+            <div class="card-hint">To be made for each other.</div>
+        </a>
+        
+        <a href="idiom-40.html" class="idiom-card" data-category="amour" data-search="avoir le béguin pour 对…有点好感；暗暗倾心">
+            <div class="card-number">#40</div>
+            <div class="card-idiom">Avoir le béguin pour</div>
+            <div class="card-category">Amour</div>
+            <div class="card-meaning">对…有点好感；暗暗倾心</div>
+            <div class="card-hint">To have a crush on.</div>
+        </a>
+        
+        <a href="idiom-41.html" class="idiom-card" data-category="réalité" data-search="les carottes sont cuites 全完了；大势已去">
+            <div class="card-number">#41</div>
+            <div class="card-idiom">Les carottes sont cuites</div>
+            <div class="card-category">Réalité</div>
+            <div class="card-meaning">全完了；大势已去</div>
+            <div class="card-hint">It's all up / the jig is up.</div>
+        </a>
+        
+        <a href="idiom-42.html" class="idiom-card" data-category="humour" data-search="il n'y a pas de quoi fouetter un chat 小事一桩；不值一提">
+            <div class="card-number">#42</div>
+            <div class="card-idiom">Il n'y a pas de quoi fouetter un chat</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">小事一桩；不值一提</div>
+            <div class="card-hint">It's nothing / no big deal.</div>
+        </a>
+        
+        <a href="idiom-43.html" class="idiom-card" data-category="action" data-search="coûte que coûte 不惜一切代价；无论如何">
+            <div class="card-number">#43</div>
+            <div class="card-idiom">Coûte que coûte</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">不惜一切代价；无论如何</div>
+            <div class="card-hint">At all costs / whatever it takes.</div>
+        </a>
+        
+        <a href="idiom-44.html" class="idiom-card" data-category="travail" data-search="être à l'heure 准时；守时">
+            <div class="card-number">#44</div>
+            <div class="card-idiom">Être à l'heure</div>
+            <div class="card-category">Travail</div>
+            <div class="card-meaning">准时；守时</div>
+            <div class="card-hint">To be on time.</div>
+        </a>
+        
+        <a href="idiom-45.html" class="idiom-card" data-category="humour" data-search="avoir un pet de travers 心情欠佳；有点别扭">
+            <div class="card-number">#45</div>
+            <div class="card-idiom">Avoir un pet de travers</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">心情欠佳；有点别扭</div>
+            <div class="card-hint">To be out of sorts.</div>
+        </a>
+        
+        <a href="idiom-46.html" class="idiom-card" data-category="critique" data-search="tourner autour du pot 拐弯抹角；不直接说">
+            <div class="card-number">#46</div>
+            <div class="card-idiom">Tourner autour du pot</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">拐弯抹角；不直接说</div>
+            <div class="card-hint">To beat around the bush.</div>
+        </a>
+        
+        <a href="idiom-47.html" class="idiom-card" data-category="action" data-search="coiffer au poteau 抢先一步；险胜">
+            <div class="card-number">#47</div>
+            <div class="card-idiom">Coiffer au poteau</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">抢先一步；险胜</div>
+            <div class="card-hint">To pip at the post / beat to it.</div>
+        </a>
+        
+        <a href="idiom-48.html" class="idiom-card" data-category="santé" data-search="avoir le moral à zéro 情绪低落；士气为零">
+            <div class="card-number">#48</div>
+            <div class="card-idiom">Avoir le moral à zéro</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">情绪低落；士气为零</div>
+            <div class="card-hint">To be down in the dumps.</div>
+        </a>
+        
+        <a href="idiom-49.html" class="idiom-card" data-category="sagesse" data-search="c'est la moindre des choses 这是最起码的；理所应当">
+            <div class="card-number">#49</div>
+            <div class="card-idiom">C'est la moindre des choses</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">这是最起码的；理所应当</div>
+            <div class="card-hint">It's the least one can do.</div>
+        </a>
+        
+        <a href="idiom-50.html" class="idiom-card" data-category="encouragement" data-search="avoir le vent en poupe 顺风得意；势头正猛">
+            <div class="card-number">#50</div>
+            <div class="card-idiom">Avoir le vent en poupe</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">顺风得意；势头正猛</div>
+            <div class="card-hint">To be sailing before the wind.</div>
+        </a>
+        
+        <a href="idiom-51.html" class="idiom-card" data-category="argent" data-search="coûter cher 代价不菲；付出沉重代价">
+            <div class="card-number">#51</div>
+            <div class="card-idiom">Coûter cher</div>
+            <div class="card-category">Argent</div>
+            <div class="card-meaning">代价不菲；付出沉重代价</div>
+            <div class="card-hint">To cost dear.</div>
+        </a>
+        
+        <a href="idiom-52.html" class="idiom-card" data-category="réalité" data-search="faire l'autruche 鸵鸟心态；逃避现实">
+            <div class="card-number">#52</div>
+            <div class="card-idiom">Faire l'autruche</div>
+            <div class="card-category">Réalité</div>
+            <div class="card-meaning">鸵鸟心态；逃避现实</div>
+            <div class="card-hint">To bury one's head in the sand.</div>
+        </a>
+        
+        <a href="idiom-53.html" class="idiom-card" data-category="amour" data-search="avoir un coup de foudre 一见钟情">
+            <div class="card-number">#53</div>
+            <div class="card-idiom">Avoir un coup de foudre</div>
+            <div class="card-category">Amour</div>
+            <div class="card-meaning">一见钟情</div>
+            <div class="card-hint">Love at first sight.</div>
+        </a>
+        
+        <a href="idiom-54.html" class="idiom-card" data-category="apparence" data-search="être sur son 31 盛装打扮；穿得格外讲究">
+            <div class="card-number">#54</div>
+            <div class="card-idiom">Être sur son 31</div>
+            <div class="card-category">Apparence</div>
+            <div class="card-meaning">盛装打扮；穿得格外讲究</div>
+            <div class="card-hint">To be dressed to the nines.</div>
+        </a>
+        
+        <a href="idiom-55.html" class="idiom-card" data-category="chance" data-search="avoir la main heureuse 眼光好；挑得准">
+            <div class="card-number">#55</div>
+            <div class="card-idiom">Avoir la main heureuse</div>
+            <div class="card-category">Chance</div>
+            <div class="card-meaning">眼光好；挑得准</div>
+            <div class="card-hint">To have a lucky touch.</div>
+        </a>
+        
+        <a href="idiom-56.html" class="idiom-card" data-category="critique" data-search="c'est le pompon 太过分了；简直登峰造极">
+            <div class="card-number">#56</div>
+            <div class="card-idiom">C'est le pompon</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">太过分了；简直登峰造极</div>
+            <div class="card-hint">That's the last straw / the height of it.</div>
+        </a>
+        
+        <a href="idiom-57.html" class="idiom-card" data-category="critique" data-search="avoir un pigeon 有个冤大头；被人当傻子骗">
+            <div class="card-number">#57</div>
+            <div class="card-idiom">Avoir un pigeon</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">有个冤大头；被人当傻子骗</div>
+            <div class="card-hint">To have a sucker / fall guy.</div>
+        </a>
+        
+        <a href="idiom-58.html" class="idiom-card" data-category="sagesse" data-search="mettre les points sur les i 把话说清楚；明确细节">
+            <div class="card-number">#58</div>
+            <div class="card-idiom">Mettre les points sur les i</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">把话说清楚；明确细节</div>
+            <div class="card-hint">To dot the i's and cross the t's.</div>
+        </a>
+        
+        <a href="idiom-59.html" class="idiom-card" data-category="réalité" data-search="être dans la lune 走神；心在月亮上">
+            <div class="card-number">#59</div>
+            <div class="card-idiom">Être dans la lune</div>
+            <div class="card-category">Réalité</div>
+            <div class="card-meaning">走神；心在月亮上</div>
+            <div class="card-hint">To have one's head in the clouds.</div>
+        </a>
+        
+        <a href="idiom-60.html" class="idiom-card" data-category="argent" data-search="coûter la peau des fesses 贵得要命（粗俗）；极昂贵">
+            <div class="card-number">#60</div>
+            <div class="card-idiom">Coûter la peau des fesses</div>
+            <div class="card-category">Argent</div>
+            <div class="card-meaning">贵得要命（粗俗）；极昂贵</div>
+            <div class="card-hint">To cost a fortune.</div>
+        </a>
+        
+        <a href="idiom-61.html" class="idiom-card" data-category="encouragement" data-search="avoir la frite 精神头足；有劲">
+            <div class="card-number">#61</div>
+            <div class="card-idiom">Avoir la frite</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">精神头足；有劲</div>
+            <div class="card-hint">To be full of beans.</div>
+        </a>
+        
+        <a href="idiom-62.html" class="idiom-card" data-category="chance" data-search="c'est du pain bénit 天降福利；求之不得的好事">
+            <div class="card-number">#62</div>
+            <div class="card-idiom">C'est du pain bénit</div>
+            <div class="card-category">Chance</div>
+            <div class="card-meaning">天降福利；求之不得的好事</div>
+            <div class="card-hint">It's a godsend / manna from heaven.</div>
+        </a>
+        
+        <a href="idiom-63.html" class="idiom-card" data-category="critique" data-search="avoir le sang chaud 性情热烈；易激动">
+            <div class="card-number">#63</div>
+            <div class="card-idiom">Avoir le sang chaud</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">性情热烈；易激动</div>
+            <div class="card-hint">To have a hot temper / warm blood.</div>
+        </a>
+        
+        <a href="idiom-64.html" class="idiom-card" data-category="humour" data-search="filer à l'anglaise 不辞而别；悄悄溜走">
+            <div class="card-number">#64</div>
+            <div class="card-idiom">Filer à l'anglaise</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">不辞而别；悄悄溜走</div>
+            <div class="card-hint">To take French leave.</div>
+        </a>
+        
+        <a href="idiom-65.html" class="idiom-card" data-category="critique" data-search="casser les pieds 烦人；惹人厌">
+            <div class="card-number">#65</div>
+            <div class="card-idiom">Casser les pieds</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">烦人；惹人厌</div>
+            <div class="card-hint">To get on someone's nerves.</div>
+        </a>
+        
+        <a href="idiom-66.html" class="idiom-card" data-category="chance" data-search="avoir le cul bordé de nouilles 运气好到爆（粗俗）；命好">
+            <div class="card-number">#66</div>
+            <div class="card-idiom">Avoir le cul bordé de nouilles</div>
+            <div class="card-category">Chance</div>
+            <div class="card-meaning">运气好到爆（粗俗）；命好</div>
+            <div class="card-hint">To be born under a lucky star.</div>
+        </a>
+        
+        <a href="idiom-67.html" class="idiom-card" data-category="santé" data-search="être à l'aise 从容自在；游刃有余">
+            <div class="card-number">#67</div>
+            <div class="card-idiom">Être à l'aise</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">从容自在；游刃有余</div>
+            <div class="card-hint">To be at ease / comfortable.</div>
+        </a>
+        
+        <a href="idiom-68.html" class="idiom-card" data-category="action" data-search="mettre la main à la pâte 动手参与；亲自干活">
+            <div class="card-number">#68</div>
+            <div class="card-idiom">Mettre la main à la pâte</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">动手参与；亲自干活</div>
+            <div class="card-hint">To lend a hand / get one's hands dirty.</div>
+        </a>
+        
+        <a href="idiom-69.html" class="idiom-card" data-category="encouragement" data-search="avoir un avenir devant soi 前途无量；来日方长">
+            <div class="card-number">#69</div>
+            <div class="card-idiom">Avoir un avenir devant soi</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">前途无量；来日方长</div>
+            <div class="card-hint">To have a bright future ahead.</div>
+        </a>
+        
+        <a href="idiom-70.html" class="idiom-card" data-category="santé" data-search="être bien dans sa peau 自我感觉良好；悦纳自己">
+            <div class="card-number">#70</div>
+            <div class="card-idiom">Être bien dans sa peau</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">自我感觉良好；悦纳自己</div>
+            <div class="card-hint">To be comfortable in one's own skin.</div>
+        </a>
+        
+        <a href="idiom-71.html" class="idiom-card" data-category="santé" data-search="avoir la dalle 饿坏了（口语）">
+            <div class="card-number">#71</div>
+            <div class="card-idiom">Avoir la dalle</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">饿坏了（口语）</div>
+            <div class="card-hint">To be starving.</div>
+        </a>
+        
+        <a href="idiom-72.html" class="idiom-card" data-category="humour" data-search="c'est la foire 乱成一锅粥；一片混乱">
+            <div class="card-number">#72</div>
+            <div class="card-idiom">C'est la foire</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">乱成一锅粥；一片混乱</div>
+            <div class="card-hint">It's a madhouse / shambles.</div>
+        </a>
+        
+        <a href="idiom-73.html" class="idiom-card" data-category="amour" data-search="avoir un faible pour 对…偏爱；有所偏好">
+            <div class="card-number">#73</div>
+            <div class="card-idiom">Avoir un faible pour</div>
+            <div class="card-category">Amour</div>
+            <div class="card-meaning">对…偏爱；有所偏好</div>
+            <div class="card-hint">To have a soft spot for.</div>
+        </a>
+        
+        <a href="idiom-74.html" class="idiom-card" data-category="humour" data-search="ça ne casse pas trois pattes à un canard 普普通通；没什么了不起">
+            <div class="card-number">#74</div>
+            <div class="card-idiom">Ça ne casse pas trois pattes à un canard</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">普普通通；没什么了不起</div>
+            <div class="card-hint">It's nothing to write home about.</div>
+        </a>
+        
+        <a href="idiom-75.html" class="idiom-card" data-category="santé" data-search="avoir le trac 怯场；上台前紧张">
+            <div class="card-number">#75</div>
+            <div class="card-idiom">Avoir le trac</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">怯场；上台前紧张</div>
+            <div class="card-hint">To have stage fright.</div>
+        </a>
+        
+        <a href="idiom-76.html" class="idiom-card" data-category="encouragement" data-search="être aux anges 欣喜万分；像在天堂">
+            <div class="card-number">#76</div>
+            <div class="card-idiom">Être aux anges</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">欣喜万分；像在天堂</div>
+            <div class="card-hint">To be over the moon.</div>
+        </a>
+        
+        <a href="idiom-77.html" class="idiom-card" data-category="argent" data-search="coûter un bras 贵得要一条胳膊（夸张）">
+            <div class="card-number">#77</div>
+            <div class="card-idiom">Coûter un bras</div>
+            <div class="card-category">Argent</div>
+            <div class="card-meaning">贵得要一条胳膊（夸张）</div>
+            <div class="card-hint">To cost an arm and a leg.</div>
+        </a>
+        
+        <a href="idiom-78.html" class="idiom-card" data-category="action" data-search="avoir la main leste 手快；动手利落（也指手欠）">
+            <div class="card-number">#78</div>
+            <div class="card-idiom">Avoir la main leste</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">手快；动手利落（也指手欠）</div>
+            <div class="card-hint">To be quick-handed / handy.</div>
+        </a>
+        
+        <a href="idiom-79.html" class="idiom-card" data-category="humour" data-search="c'est la joie 太棒了；好极了（常用反讽）">
+            <div class="card-number">#79</div>
+            <div class="card-idiom">C'est la joie</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">太棒了；好极了（常用反讽）</div>
+            <div class="card-hint">Just great (sarcastic).</div>
+        </a>
+        
+        <a href="idiom-80.html" class="idiom-card" data-category="action" data-search="avoir les dents longues 野心勃勃；志在必得">
+            <div class="card-number">#80</div>
+            <div class="card-idiom">Avoir les dents longues</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">野心勃勃；志在必得</div>
+            <div class="card-hint">To have big ambitions / teeth.</div>
+        </a>
+        
+        <a href="idiom-81.html" class="idiom-card" data-category="santé" data-search="être dans ses petits souliers 局促不安；有点慌">
+            <div class="card-number">#81</div>
+            <div class="card-idiom">Être dans ses petits souliers</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">局促不安；有点慌</div>
+            <div class="card-hint">To be ill at ease / small.</div>
+        </a>
+        
+        <a href="idiom-82.html" class="idiom-card" data-category="santé" data-search="avoir un cœur gros comme ça 心里难受；满腹委屈">
+            <div class="card-number">#82</div>
+            <div class="card-idiom">Avoir un cœur gros comme ça</div>
+            <div class="card-category">Santé</div>
+            <div class="card-meaning">心里难受；满腹委屈</div>
+            <div class="card-hint">To have a heavy heart.</div>
+        </a>
+        
+        <a href="idiom-83.html" class="idiom-card" data-category="sagesse" data-search="c'est du sérieux 这可是认真的；不是闹着玩">
+            <div class="card-number">#83</div>
+            <div class="card-idiom">C'est du sérieux</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">这可是认真的；不是闹着玩</div>
+            <div class="card-hint">This is serious business.</div>
+        </a>
+        
+        <a href="idiom-84.html" class="idiom-card" data-category="encouragement" data-search="avoir la patate 精神头足；有干劲儿">
+            <div class="card-number">#84</div>
+            <div class="card-idiom">Avoir la patate</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">精神头足；有干劲儿</div>
+            <div class="card-hint">To be full of beans.</div>
+        </a>
+        
+        <a href="idiom-85.html" class="idiom-card" data-category="amour" data-search="être fleur bleue 多愁善感；爱浪漫">
+            <div class="card-number">#85</div>
+            <div class="card-idiom">Être fleur bleue</div>
+            <div class="card-category">Amour</div>
+            <div class="card-meaning">多愁善感；爱浪漫</div>
+            <div class="card-hint">To be sentimental / a romantic.</div>
+        </a>
+        
+        <a href="idiom-86.html" class="idiom-card" data-category="sagesse" data-search="avoir la main de fer dans un gant de velours 外柔内刚；绵里藏针">
+            <div class="card-number">#86</div>
+            <div class="card-idiom">Avoir la main de fer dans un gant de velours</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">外柔内刚；绵里藏针</div>
+            <div class="card-hint">An iron hand in a velvet glove.</div>
+        </a>
+        
+        <a href="idiom-87.html" class="idiom-card" data-category="amour" data-search="c'est un conte de fées 像童话一样美好">
+            <div class="card-number">#87</div>
+            <div class="card-idiom">C'est un conte de fées</div>
+            <div class="card-category">Amour</div>
+            <div class="card-meaning">像童话一样美好</div>
+            <div class="card-hint">It's a fairy tale.</div>
+        </a>
+        
+        <a href="idiom-88.html" class="idiom-card" data-category="amour" data-search="avoir le hoquet de l'amour （俏皮）相思难抑；爱意打嗝">
+            <div class="card-number">#88</div>
+            <div class="card-idiom">Avoir le hoquet de l'amour</div>
+            <div class="card-category">Amour</div>
+            <div class="card-meaning">（俏皮）相思难抑；爱意打嗝</div>
+            <div class="card-hint">To have the hiccups of love (playful).</div>
+        </a>
+        
+        <a href="idiom-89.html" class="idiom-card" data-category="critique" data-search="être pris la main dans le sac 被当场抓住；人赃并获">
+            <div class="card-number">#89</div>
+            <div class="card-idiom">Être pris la main dans le sac</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">被当场抓住；人赃并获</div>
+            <div class="card-hint">To be caught red-handed.</div>
+        </a>
+        
+        <a href="idiom-90.html" class="idiom-card" data-category="réalité" data-search="avoir un voile sur les yeux 被蒙蔽；看不清真相">
+            <div class="card-number">#90</div>
+            <div class="card-idiom">Avoir un voile sur les yeux</div>
+            <div class="card-category">Réalité</div>
+            <div class="card-meaning">被蒙蔽；看不清真相</div>
+            <div class="card-hint">To have wool over one's eyes.</div>
+        </a>
+        
+        <a href="idiom-91.html" class="idiom-card" data-category="patience" data-search="c'est la croix et la bannière 费了九牛二虎之力；极难">
+            <div class="card-number">#91</div>
+            <div class="card-idiom">C'est la croix et la bannière</div>
+            <div class="card-category">Patience</div>
+            <div class="card-meaning">费了九牛二虎之力；极难</div>
+            <div class="card-hint">It's a real struggle / uphill battle.</div>
+        </a>
+        
+        <a href="idiom-92.html" class="idiom-card" data-category="action" data-search="avoir le feu sacré 满怀热忱；有使命感">
+            <div class="card-number">#92</div>
+            <div class="card-idiom">Avoir le feu sacré</div>
+            <div class="card-category">Action</div>
+            <div class="card-meaning">满怀热忱；有使命感</div>
+            <div class="card-hint">To have a burning passion.</div>
+        </a>
+        
+        <a href="idiom-93.html" class="idiom-card" data-category="amitié" data-search="être sur la même longueur d'onde 想到一块儿；合拍">
+            <div class="card-number">#93</div>
+            <div class="card-idiom">Être sur la même longueur d'onde</div>
+            <div class="card-category">Amitié</div>
+            <div class="card-meaning">想到一块儿；合拍</div>
+            <div class="card-hint">To be on the same wavelength.</div>
+        </a>
+        
+        <a href="idiom-94.html" class="idiom-card" data-category="sagesse" data-search="avoir de la bouteille 有经验；老练">
+            <div class="card-number">#94</div>
+            <div class="card-idiom">Avoir de la bouteille</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">有经验；老练</div>
+            <div class="card-hint">To have experience under one's belt.</div>
+        </a>
+        
+        <a href="idiom-95.html" class="idiom-card" data-category="humour" data-search="c'est le petit robert （调侃）像字典一样准确/正经">
+            <div class="card-number">#95</div>
+            <div class="card-idiom">C'est le petit Robert</div>
+            <div class="card-category">Humour</div>
+            <div class="card-meaning">（调侃）像字典一样准确/正经</div>
+            <div class="card-hint">It's by the book (playful).</div>
+        </a>
+        
+        <a href="idiom-96.html" class="idiom-card" data-category="sagesse" data-search="avoir le jugement sain 判断明智；头脑清醒">
+            <div class="card-number">#96</div>
+            <div class="card-idiom">Avoir le jugement sain</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">判断明智；头脑清醒</div>
+            <div class="card-hint">To have sound judgment.</div>
+        </a>
+        
+        <a href="idiom-97.html" class="idiom-card" data-category="prudence" data-search="être à l'épreuve des balles 刀枪不入；经受住考验">
+            <div class="card-number">#97</div>
+            <div class="card-idiom">Être à l'épreuve des balles</div>
+            <div class="card-category">Prudence</div>
+            <div class="card-meaning">刀枪不入；经受住考验</div>
+            <div class="card-hint">To be bulletproof.</div>
+        </a>
+        
+        <a href="idiom-98.html" class="idiom-card" data-category="sagesse" data-search="avoir les idées claires 思路清晰；心里有数">
+            <div class="card-number">#98</div>
+            <div class="card-idiom">Avoir les idées claires</div>
+            <div class="card-category">Sagesse</div>
+            <div class="card-meaning">思路清晰；心里有数</div>
+            <div class="card-hint">To have a clear head.</div>
+        </a>
+        
+        <a href="idiom-99.html" class="idiom-card" data-category="critique" data-search="c'est le comble 简直过分；登峰造极（贬）">
+            <div class="card-number">#99</div>
+            <div class="card-idiom">C'est le comble</div>
+            <div class="card-category">Critique</div>
+            <div class="card-meaning">简直过分；登峰造极（贬）</div>
+            <div class="card-hint">That's the limit / the height of it.</div>
+        </a>
+        
+        <a href="idiom-100.html" class="idiom-card" data-category="encouragement" data-search="avoir la pêche à pleurer 状态好到爆；元气满格">
+            <div class="card-number">#100</div>
+            <div class="card-idiom">Avoir la pêche à pleurer</div>
+            <div class="card-category">Encouragement</div>
+            <div class="card-meaning">状态好到爆；元气满格</div>
+            <div class="card-hint">To be bursting with energy.</div>
+        </a>
+        
+</div>
+
+<div class="no-results" id="noResults">
+    没有找到匹配的习语 😅
+</div>
+
+<footer class="page-footer">
+    <p>涛子办事处 &bull; 法语习语学习工具</p>
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Search & Filter
+function filterIdioms() {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.idiom-card');
+    const activeCat = document.querySelector('.category-tag.active:not([data-cat="all"])');
+    let visible = false;
+    
+    cards.forEach(c => {
+        const searchText = c.dataset.search;
+        const cats = c.dataset.category.split(' ');
+        const matchSearch = !q || searchText.includes(q);
+        const matchCat = !activeCat || cats.includes(activeCat.dataset.cat);
+        
+        if (matchSearch && matchCat) {
+            c.style.display = 'block';
+            visible = true;
+        } else {
+            c.style.display = 'none';
+        }
+    });
+    
+    document.getElementById('noResults').style.display = visible ? 'none' : 'block';
+}
+
+function filterByCategory(cat, el) {
+    document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    filterIdioms();
+}
+
+// Back to top
+window.addEventListener('scroll', function() {
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
+});
+</script>
+
+</body>
+</html>
