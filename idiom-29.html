@@ -104,6 +104,26 @@ body {
     padding: 24px 20px;
     font-size: 0.85rem;
 }
+.page-footer .brand-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 6px;
+}
+.page-footer .brand-row img.brand-logo {
+    height: 54px;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    background: #fff;
+}
+.page-footer .brand-row .brand-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+}
 
 /* Back to Top */
 .back-to-top {
@@ -982,7 +1002,11 @@ body {
 </div>
 
 <footer class="page-footer">
-    <p>涛子办事处 · 法语习语学习工具 · #29/100</p>
+    <div class="brand-row">
+        <img class="brand-logo" src="assets/logo-piano.jpg" alt="涛子办事处 logo">
+        <span class="brand-name">涛子办事处</span>
+    </div>
+    <p>法语习语学习工具 · #29/100</p>
 </footer>
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
